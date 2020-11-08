@@ -1,7 +1,6 @@
 # Pishing-Detection
 
-
-![Training Overview Diagram for URL classification](Overview Diagram)
+![Training Overview Diagram for URL classification](./Overview_Diagram_URL_Detection.xml)
 
 ### Git Commands
 
