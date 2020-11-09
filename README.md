@@ -23,6 +23,8 @@ The following model shows the process of feature engineering and model training 
 
 Final Model - Predicting a email:
 
+![Predicting an email with final model](images/Predicting_diagram.png)
+
 ## Roadmap
 
 The following gives a rough timeline for the project, there is a great potential for this timeline to be accelerated.
