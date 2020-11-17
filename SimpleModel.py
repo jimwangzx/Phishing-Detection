@@ -3,46 +3,40 @@ import pandas as pd
 import tensorflow as tf
 from matplotlib import pyplot as plt
 
-train_ds = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\trainSet.csv")
-test_ds = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\testSet.csv")
+#test_ds = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\testSet.csv")
+dataset = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\lengthData.csv")
 
-train_ds['Length'] = train_ds['Length'].astype(float)
-test_ds['Length'] = test_ds['Length'].astype(float)
+def build_model(learning_rate):
+    model = tf.keras.models.Sequential()
 
-print("\n\n", train_ds.head(10), "\n\n")
+    #add one layer
+    model.add(tf.keras.layers.Dense(units=1, input_shape=(1,)))
 
-def build_model(my_learning_rate):
-  """Create and compile a simple linear regression model."""
-  model = tf.keras.models.Sequential()
+    #Reduce mean square error
+    model.compile(optimizer=tf.keras.optimizers.RMSprop(lr=learning_rate),
+            loss="mean_squared_error",
+            metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
-  model.add(tf.keras.layers.Dense(units=1, input_shape=(1,)))
- 
-  model.compile(optimizer=tf.keras.optimizers.RMSprop(lr=my_learning_rate),
-                loss="mean_squared_error",
-                metrics=[tf.keras.metrics.RootMeanSquaredError()])
+    return model 
 
-  return model               
+def train_model(model, df, feature, label, epochs, batch_size=None, validation_split=0.1):
 
+    history = model.fit(x=df[feature],
+                      y=df[label],
+                      batch_size=batch_size,
+                      epochs=epochs,
+                      validation_split=validation_split)
 
-def train_model(model, ds, feature, label, my_epochs, 
-                my_batch_size=None, my_validation_split=0.1):
-  """Feed a dataset into the model in order to train it."""
+    #obtain trained models weight and bias
+    trained_weight = model.get_weights()[0]
+    trained_bias = model.get_weights()[1]
 
-  history = model.fit(x=ds[feature],
-                      y=ds[label],
-                      batch_size=my_batch_size,
-                      epochs=my_epochs,
-                      validation_split=my_validation_split)
+    #epochs stored separately
+    epochs = history.epoch
 
-
-  epochs = history.epoch
-
-  hist = pd.DataFrame(history.history)
-  rmse = hist["root_mean_squared_error"]
-
-  return epochs, rmse, history.history   
-
-print("Defined the build_model and train_model functions.")
+    hist = pd.DataFrame(history.history)
+    rmse = hist["root_mean_squared_error"]
+    return epochs, rmse, history.history
 
 def plot_the_loss_curve(epochs, mae_training, mae_validation):
   """Plot a curve of loss vs. epoch."""
@@ -55,6 +49,8 @@ def plot_the_loss_curve(epochs, mae_training, mae_validation):
   plt.plot(epochs[1:], mae_validation[1:], label="Validation Loss")
   plt.legend()
   
+  # We're not going to plot the first epoch, since the loss on the first epoch
+  # is often substantially greater than the loss for other epochs.
   merged_mae_lists = mae_training[1:] + mae_validation[1:]
   highest_loss = max(merged_mae_lists)
   lowest_loss = min(merged_mae_lists)
@@ -67,27 +63,18 @@ def plot_the_loss_curve(epochs, mae_training, mae_validation):
   plt.ylim([bottom_of_y_axis, top_of_y_axis])
   plt.show()  
 
-print("Defined the plot_the_loss_curve function.")
-
-
-
-
-learning_rate = 0.08
+learning_rate = 0.1
 epochs = 30
-batch_size = 100
-
+batch_size = 10
 validation_split=0.2
 
-my_feature="Length" 
-my_label=""
+feature="Length"
+label="GoodBadInteger"
 
-my_model = None
+model = None
 
-my_model = build_model(learning_rate)
-epochs, rmse, history = train_model(my_model, train_ds, my_feature, 
-                                    my_label, epochs, batch_size, 
-                                    validation_split)
+model = build_model(learning_rate)
+epochs, rmse, history = train_model(model, dataset, feature, label, epochs, batch_size, validation_split)
 
 plot_the_loss_curve(epochs, history["root_mean_squared_error"], 
                     history["val_root_mean_squared_error"])
-                    
