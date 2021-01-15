@@ -1,15 +1,17 @@
 import pandas as pd
-import string
+import string, os
 from itertools import permutations
 
+dirname = os.path.dirname(__file__)
+
 # Read Dataset
-data = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\model_1.1\urls.csv", engine= 'python') 
+data = pd.read_csv(os.path.join(dirname,"../data/phishing_site_urls.csv")) 
 f1 = data['URL']
 f2 = data['Label']
 dataSize = 549346
 
 # Read Common Words List
-links = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\model_1.1\commonString.csv", engine= 'python') 
+links = pd.read_csv(os.path.join(dirname,"../data/commonString.csv"), engine= 'python') 
 commonWord = links['String']
 g1 = links['Good']
 t1 = links['Word Count']
