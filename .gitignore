@@ -1,4 +1,5 @@
 *.csv
+!phishing_site_urls.csv
 
 .ipynb_checkpoints
 
