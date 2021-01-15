@@ -1,0 +1,18 @@
+- For all items bucket accuracy =~ 91%
+- All items =~ 76%
+- Model_1.2 =~ 83%
+
+- Comparing Bucketed items
+    Fixed Dataset:
+        Good =  213253 
+        Percentage =  83.70773947142202
+
+        Bad =  41506 
+        Percentage =  16.292260528577984 
+
+    Regular Dataset:
+        Good =  392924 
+        Percentage =  71.52577792502358
+
+        Bad =  156422 
+        Percentage =  28.474222074976424 
