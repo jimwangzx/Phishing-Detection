@@ -1,10 +1,12 @@
 import pandas as pd
-import string
+import string, os
 from itertools import permutations
+
+dirname = os.path.dirname(__file__)
 
 #To change files change the string in main and the label title
 
-dataSet1 = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\2020\ciarandataset.csv") 
+dataSet1 = pd.read_csv(os.path.join(dirname, "../data/phishin_site_urls.csv"))
 feature1 = dataSet1['URL']
 feature2 = dataSet1['Label']
 size = 549346
