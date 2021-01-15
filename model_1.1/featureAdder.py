@@ -100,6 +100,6 @@ def main():
 
     df = pd.DataFrame(final)
 
-    df.to_csv('model_1.1/Model_1.1Dataset.csv')
+    df.to_csv(os.path.join(dirname,"../data/Model_1.1Dataset.csv"))
 
 main()

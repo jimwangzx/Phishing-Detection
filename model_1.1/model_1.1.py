@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 dirname = os.path.dirname(__file__)
 
 # import dataset
-data = pd.read_csv(os.path.join(dirname,"Model_1.1Dataset.csv"))
+data = pd.read_csv(os.path.join(dirname,"../data/Model_1.1Dataset.csv"))
 
 data = data.drop(columns=['Unnamed: 0'])
 # split dataset
