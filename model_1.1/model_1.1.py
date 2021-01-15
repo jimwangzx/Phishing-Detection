@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import csv
+import csv, os
 import pathlib
 import tensorflow as tf
 from tensorflow import keras
@@ -9,9 +9,10 @@ from tensorflow import feature_column
 from tensorflow.keras import layers
 from sklearn.model_selection import train_test_split
 
+dirname = os.path.dirname(__file__)
+
 # import dataset
-#data = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\model_1.1\Test\FixedModel_1.1Dataset.csv", engine= 'python')
-data = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\model_1.1\Model_1.1Dataset.csv", engine= 'python')
+data = pd.read_csv(os.path.join(dirname,"Model_1.1Dataset.csv"))
 
 data = data.drop(columns=['Unnamed: 0'])
 # split dataset
