@@ -12,9 +12,8 @@ from sklearn.model_selection import train_test_split
 dirname = os.path.dirname(__file__)
 
 # import dataset
-data = pd.read_csv(os.path.join(dirname,"../data/Model_1.2Dataset.csv"))
+data = pd.read_csv(os.path.join(dirname,"../data/Model_1.2Dataset.csv"), index_col="Unnamed: 0")
 
-data = data.drop(columns=['Unnamed: 0'])
 # split dataset
 train, test = train_test_split(data, test_size=0.2)
 train, val = train_test_split(train, test_size=0.2)
@@ -54,5 +53,5 @@ model.compile(loss = tf.losses.MeanSquaredError(), optimizer = tf.optimizers.Ada
 
 model.fit(train_ds, validation_data=val_ds, epochs=20)
 
-loss, accuracy = model.evaluate(test)
+loss, accuracy = model.evaluate(test_ds)
 print("Accuracy", accuracy)
