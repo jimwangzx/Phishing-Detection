@@ -121,7 +121,7 @@ def main():
     print('Loading... 100 %')
     # Create final dataframe
 
-    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'Question Mark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'Target': target}
+    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'QuestionMark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'Target': target}
 
     df = pd.DataFrame(final)
 
