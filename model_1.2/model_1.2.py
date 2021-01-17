@@ -37,7 +37,7 @@ test_ds = df_to_dataset(test, shuffle=False, batch_size=batch_size)
 feature = []
 
 # insert numeric labels
-for header in ['Length', 'CommonWords', 'Slashes', 'DoubleSlash', 'AtSymbol', 'PeriodCount', 'WLetter', 'VLetter', 'XLetter', 'ZLetter', 'JLetter', 'QLetter', 'Vowels', 'DotService']:
+for header in ['Length', 'CommonWords', 'Slashes', 'DoubleSlash', 'Question Mark', 'AtSymbol', 'PeriodCount', 'Dash', 'Semicolon', 'WLetter', 'VLetter', 'XLetter', 'ZLetter', 'JLetter', 'QLetter', 'Vowels', 'DotService']:
   feature.append(feature_column.numeric_column(header))
 
 feature_layer = tf.keras.layers.DenseFeatures(feature)

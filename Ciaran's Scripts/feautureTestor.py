@@ -1,7 +1,10 @@
 import pandas as pd
+import os
 import string
 
-data = pd.read_csv(r"C:\Users\cbyle\Desktop\Files\Pishing-Detection\model_1.1\urls.csv", engine= 'python') 
+dirname = os.path.dirname(__file__)
+
+data = pd.read_csv(os.path.join(dirname,"../data/phishing_site_urls.csv"), engine= 'python') 
 f1 = data['URL']
 f2 = data['Label']
 
@@ -9,8 +12,8 @@ bad = 0
 good = 0
 
 # Change these variables
-numList = ['&']
-minimum = 2
+numList = ['?', '!']
+minimum = 1
 
 print("The minimum is: ", minimum)
 

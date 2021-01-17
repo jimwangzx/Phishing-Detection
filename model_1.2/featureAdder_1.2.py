@@ -15,6 +15,7 @@ links = pd.read_csv(os.path.join(dirname,"../data/commonString.csv"), engine= 'p
 commonWord = links['String']
 g1 = links['Good']
 t1 = links['Word Count']
+peri = links['Percent Indication']
 
 # Vowel list
 vowelLetter = ['a', 'e', 'i', 'o', 'u']
@@ -60,6 +61,10 @@ def main():
     qLetter = [0]*(dataSize)
     vowels = [0]*(dataSize)
     dotService = [0]*(dataSize)
+    semicolon = [0]*(dataSize)
+    dash = [0]*(dataSize)
+    qmark = [0]*(dataSize)
+
 
     target = [0]*(dataSize)
 
@@ -102,6 +107,13 @@ def main():
         # Feature: .edu or .org
         dotService[i] = f1[i].count('.edu') + f1[i].count('.org')
 
+        # Feature: Question Mark
+        qmark[i] = f1[i].count('?')
+
+        # Feature: - and ;
+        dash[i] = f1[i].count('-')
+        semicolon[i] = f1[i].count(';')
+
         # Change Label to integer
         if f2[i] == 'good':
             target[i] = 1
@@ -109,7 +121,7 @@ def main():
     print('Loading... 100 %')
     # Create final dataframe
 
-    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'Target': target}
+    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'Question Mark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'Target': target}
 
     df = pd.DataFrame(final)
 
