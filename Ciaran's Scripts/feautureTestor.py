@@ -12,7 +12,7 @@ bad = 0
 good = 0
 
 # Change these variables
-numList = ['?', '!']
+numList = ['.']
 minimum = 1
 
 print("The minimum is: ", minimum)

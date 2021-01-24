@@ -17,8 +17,9 @@ g1 = links['Good']
 t1 = links['Word Count']
 peri = links['Percent Indication']
 
-# Vowel list
+# Lists
 vowelLetter = ['a', 'e', 'i', 'o', 'u']
+numList = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
 def VocabCheck(url):
     # define variables
@@ -64,6 +65,7 @@ def main():
     semicolon = [0]*(dataSize)
     dash = [0]*(dataSize)
     qmark = [0]*(dataSize)
+    firstPartNumbers = [0]*(dataSize)
 
 
     target = [0]*(dataSize)
@@ -114,6 +116,21 @@ def main():
         dash[i] = f1[i].count('-')
         semicolon[i] = f1[i].count(';')
 
+        # Feature: Numbers in first section
+        titleURL = f1[i]
+        firstPartNumbersCount = 0
+        if f1[i].count('/') == 0:
+            URLlength = len(f1[i])
+        else:
+            URLlength = f1[i].index('/')
+
+        titleURL = titleURL[0:URLlength]
+
+        for n in range (0,len(numList),1):
+            firstPartNumbersCount += titleURL.count(numList[n])
+
+        firstPartNumbers[i] = firstPartNumbersCount
+
         # Change Label to integer
         if f2[i] == 'good':
             target[i] = 1
@@ -121,7 +138,7 @@ def main():
     print('Loading... 100 %')
     # Create final dataframe
 
-    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'QuestionMark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'Target': target}
+    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'QuestionMark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'FirstPartNumbers': firstPartNumbers, 'Target': target}
 
     df = pd.DataFrame(final)
 

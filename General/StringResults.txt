@@ -65,3 +65,24 @@
 ['?']	Minimum: 2	Total Links: 5762	Good Samples: 103	Bad Samples: 5659	Percent Indication: 1.78
 ['?', '!']	Minimum: 2	Total Links: 5898	Good Samples: 186	Bad Samples: 5712	Percent Indication: 3.15
 ['?', '!']	Minimum: 1	Total Links: 82340	Good Samples: 49706	Bad Samples: 32634	Percent Indication: 60.36
+['aa']	Minimum: 1	Total Links: 7930	Good Samples: 3386	Bad Samples: 4544	Percent Indication: 42.69
+['aa']	Minimum: 1	Total Links: 7930	Good Samples: 3386	Bad Samples: 4544	Percent Indication: 42.69
+['bb']	Minimum: 1	Total Links: 8531	Good Samples: 3784	Bad Samples: 4747	Percent Indication: 44.35
+['cc']	Minimum: 1	Total Links: 17895	Good Samples: 7523	Bad Samples: 10372	Percent Indication: 42.03
+['cc', 'aa', 'bb', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk']	Minimum: 3	Total Links: 4699	Good Samples: 814	Bad Samples: 3885	Percent Indication: 17.32
+['cc', 'aa', 'bb', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk']	Minimum: 4	Total Links: 1786	Good Samples: 145	Bad Samples: 1641	Percent Indication: 8.11
+['cc', 'aa', 'bb', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk', 'll', 'mm', 'nn', 'oo', 'pp', 'qq', 'rr', 'ss', 'tt', 'uu', 'vv', 'ww', 'xx', 'yy', 'zz']	Minimum: 4	Total Links: 20234	Good Samples: 7673	Bad Samples: 12561	Percent Indication: 37.92
+['cc', 'aa', 'bb', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk', 'll', 'mm', 'nn', 'oo', 'pp', 'qq', 'rr', 'ss', 'tt', 'uu', 'vv', 'ww', 'xx', 'yy', 'zz']	Minimum: 7	Total Links: 1774	Good Samples: 303	Bad Samples: 1471	Percent Indication: 17.08
+['@@']	Minimum: 1	Total Links: 3	Good Samples: 3	Bad Samples: 0	Percent Indication: 100.0
+['--']	Minimum: 1	Total Links: 2172	Good Samples: 1737	Bad Samples: 435	Percent Indication: 79.97
+[';;']	Minimum: 1	Total Links: 99	Good Samples: 0	Bad Samples: 99	Percent Indication: 0.0
+['::']	Minimum: 1	Total Links: 103	Good Samples: 82	Bad Samples: 21	Percent Indication: 79.61
+[':']	Minimum: 1	Total Links: 7799	Good Samples: 2606	Bad Samples: 5193	Percent Indication: 33.41
+['#']	Minimum: 1	Total Links: 549	Good Samples: 202	Bad Samples: 347	Percent Indication: 36.79
+['~']	Minimum: 1	Total Links: 8987	Good Samples: 6938	Bad Samples: 2049	Percent Indication: 77.2
+['`']	Minimum: 1	Total Links: 36	Good Samples: 28	Bad Samples: 8	Percent Indication: 77.77
+['+']	Minimum: 1	Total Links: 13613	Good Samples: 13030	Bad Samples: 583	Percent Indication: 95.71
+['-']	Minimum: 1	Total Links: 196788	Good Samples: 148134	Bad Samples: 48654	Percent Indication: 75.27
+['|']	Minimum: 1	Total Links: 148	Good Samples: 66	Bad Samples: 82	Percent Indication: 44.59
+['*']	Minimum: 1	Total Links: 106	Good Samples: 74	Bad Samples: 32	Percent Indication: 69.81
+['.']	Minimum: 1	Total Links: 549215	Good Samples: 392867	Bad Samples: 156348	Percent Indication: 71.53
