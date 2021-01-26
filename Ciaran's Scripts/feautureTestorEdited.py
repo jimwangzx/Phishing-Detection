@@ -14,7 +14,7 @@ bad = 0
 good = 0
 
 # Change these variables
-numList = ['.de']
+numList = ['']
 minimum = 1
 
 print("The minimum is: ", minimum)
@@ -30,16 +30,8 @@ for i in range(0,dataSize,1):
     # Each individual string determining
     count = 0
 
-    titleURL = f1[i]
-    if f1[i].count('/') == 0:
-        URLlength = len(f1[i])
-    else:
-        URLlength = f1[i].index('/')
-
-    titleURL = titleURL[0:URLlength]
-
     for x in range (0,len(numList),1):
-        count += titleURL.count(numList[x])
+        count += f1[i].count(numList[x])
 
     if count >= minimum:
         if f2[i] == 'good':
@@ -53,8 +45,8 @@ print('Good = ', good, '\nBad = ', bad, '\nTotal = ', bad + good, '\nPercent Ind
 #print to file
 
 #add to file
-#line = str(numList) + "\tMinimum: " + str(minimum) + "\tTotal Links: " + str(good+bad) + "\tGood Samples: " + str(good) + "\tBad Samples: " + str(bad) + "\tPercent Indication: " + str(int(good*10000/(good+bad))/100) + "\n"
+line = str(numList) + "\tMinimum: " + str(minimum) + "\tTotal Links: " + str(good+bad) + "\tGood Samples: " + str(good) + "\tBad Samples: " + str(bad) + "\tPercent Indication: " + str(int(good*10000/(good+bad))/100) + "\n"
 
-#fi = open("General\StringResults.txt", "a")
-#fi.write(line)
-#fi.close()
+fi = open("General\DoubleLetterResults.txt", "w")
+fi.write(line)
+fi.close()
