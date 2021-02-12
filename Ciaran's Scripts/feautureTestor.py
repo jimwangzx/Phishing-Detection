@@ -7,21 +7,24 @@ dirname = os.path.dirname(__file__)
 data = pd.read_csv(os.path.join(dirname,"../data/phishing_site_urls.csv"), engine= 'python') 
 f1 = data['URL']
 f2 = data['Label']
+dataSize = 549346
 
 bad = 0
 good = 0
 
 # Change these variables
-numList = ['.']
-minimum = 1
+numList = ['.com', '.net', '.org', '.co', '.uk', '.us', '.gov', '.edu', '.info', '.biz', '.me']
+minimum = 3
 
 print("The minimum is: ", minimum)
+time = 0
 
-for i in range(0,549346,1):
-    if i %100000 == 0:
-        print('At ', i)
+for i in range(0,dataSize,1):
+    if i % int(dataSize/20) == 0:
+        print('At ', time, '%')
+        time += 5
     elif i == 549345:
-        print("Done... Preparing results")
+        print("Done... Preparing results\n\n")
     
     count = 0
     for x in range (0,len(numList),1):

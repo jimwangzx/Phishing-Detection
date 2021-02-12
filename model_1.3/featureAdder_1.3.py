@@ -11,7 +11,7 @@ f2 = data['Label']
 dataSize = 549346
 
 # Read Common Words List
-links = pd.read_csv(os.path.join(dirname,"../data/commonString.csv"), engine= 'python') 
+links = pd.read_csv(os.path.join(dirname,"../data/commonString3.csv"), engine= 'python') 
 commonWord = links['String']
 g1 = links['Good']
 t1 = links['Word Count']
@@ -28,7 +28,7 @@ def VocabCheck(url):
     
     # Run through the list of common words
     for i in range (0,len(commonWord),1):
-        if url.find(commonWord[i]) >= 0:
+        if url.find(str(commonWord[i])) >= 0:
             # if found state whether word is good or bad
             if g1[i] > t1[i] - g1[i]:
                 goodWordsFound += 1
@@ -61,7 +61,7 @@ def main():
     jLetter = [0]*(dataSize)
     qLetter = [0]*(dataSize)
     vowels = [0]*(dataSize)
-    dotService = [0]*(dataSize)
+    paypal = [0]*(dataSize)
     semicolon = [0]*(dataSize)
     dash = [0]*(dataSize)
     qmark = [0]*(dataSize)
@@ -72,16 +72,25 @@ def main():
 
     # Run loop for all variables
     for i in range(0,dataSize,1):
-        # Print Progress
-        if i % 10000 == 0:
+        if i % int(dataSize/100) == 0:
             print('Loading...', int(i*100/dataSize), '%')
 
         # Feature: Length of string
-        length[i] = len(f1[i])
+        if len(f1[i]) < 60:
+            length[i] = 0
+        elif len(f1[i]) < 120:
+            length[i] = 1
+        elif len(f1[i]) < 225:
+            length[i] = 2
+        else:
+            length[i] = 3
 
         # Feature: Vocabulary addition
         vocab[i] = VocabCheck(f1[i])
 
+        # Feature: Paypal finder
+        paypal[i] = f1[i].count('paypal')
+        
         # Feature: counts '/'
         slashes[i] = f1[i].count('/')
 
@@ -105,9 +114,6 @@ def main():
         # Feature: vowels
         for z in range(0,5,1):
             vowels[i] += f1[i].count(vowelLetter[z])
-
-        # Feature: .edu or .org
-        dotService[i] = f1[i].count('.edu') + f1[i].count('.org')
 
         # Feature: Question Mark
         qmark[i] = f1[i].count('?')
@@ -138,7 +144,7 @@ def main():
     print('Loading... 100 %')
     # Create final dataframe
 
-    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'QuestionMark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'DotService': dotService, 'Label': f2, 'FirstPartNumbers': firstPartNumbers, 'Target': target}
+    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Paypal': paypal, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'QuestionMark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'FirstPartNumbers': firstPartNumbers, 'Target': target}
 
     df = pd.DataFrame(final)
 

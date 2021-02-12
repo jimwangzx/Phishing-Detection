@@ -14,11 +14,36 @@ label = data['Label']
 
 pastCS = pd.read_csv(os.path.join(dirname,"../data/commonString.csv"))
 length = pastCS['Bad']
-print(len(pastCS))
+#print(len(pastCS))
 
-
+newCS = pd.read_csv(os.path.join(dirname,"../data/CommonStringsv2021.csv")) #Changed this
 # user input: Type words here
-words = ['login', 'bio']
+allwords = newCS['String'] #this is new
+words = []
+minimum = 100
+
+def wordCriteria():
+    per100Counter = 0
+    perc = 0
+    for w in allwords:
+        numOfURLwStr = 0
+        per100Counter += 1
+        if per100Counter % int(len(allwords)/100) == 0:
+            print(perc, '%')
+            perc += 1
+
+        for u in url:
+            if u.count(str(w)) > 0:
+                numOfURLwStr += 1
+        if numOfURLwStr >= minimum:
+            words.append(w)
+
+    # make a FUCKING BACKUP SM FUCKING H, 2 DAYS OF PROCESSING POWER GONE!!!!!!!! FUCK
+    backup = {'String': words}
+
+    bdf = pd.DataFrame(backup)
+
+    bdf.to_csv(os.path.join(dirname, '../Test/BackupStrings.csv'))
 
 def wordStats(word):
     count = 0
@@ -41,7 +66,7 @@ def appendCommonString(word, total, good, index):
     #dataPoint = {'String': word, 'Word Count': total, 'Good': good, 'Bad': total-good, 'Percent Indication': percentIndication}
     dataPoint = [index, word, total, good, total-good, percentIndication]
 
-    with open(os.path.join(dirname,"../data/commonString.csv"), 'a+', newline='') as write_obj:
+    with open(os.path.join(dirname,"../data/commonString3.csv"), 'a+', newline='') as write_obj:
 
         csv_writer = writer(write_obj)
 
@@ -52,9 +77,16 @@ def appendCommonString(word, total, good, index):
 
 def main():
     
+    print('\nMain program started\n')
+    wordCriteria()
+    print('\nWordlist complete\nStarting second loop...\n')
+
     for z in range(0,len(words),1):
-        tot, g = wordStats(words[z])
-        appendCommonString(words[z], tot, g, len(length)-1+z)
+        if z % int(len(words)/100) == 0:
+            print('Loading...', int(z/len(words)*100), '%')
+        tot, g = wordStats(str(words[z]))
+        appendCommonString(str(words[z]), tot, g, len(length)-1+z)
 
     print("\n\ndone\n\n")
+
 main()

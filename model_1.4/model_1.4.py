@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 dirname = os.path.dirname(__file__)
 
 # import dataset
-data = pd.read_csv(os.path.join(dirname,"../data/Model_1.3Dataset.csv"), index_col="Unnamed: 0")
+data = pd.read_csv(os.path.join(dirname,"../data/Model_1.4Dataset.csv"), index_col="Unnamed: 0")
 
 # split dataset
 train, test = train_test_split(data, test_size=0.2)
@@ -36,16 +36,8 @@ test_ds = df_to_dataset(test, shuffle=True, batch_size=batch_size)
 # create feauture list
 feature = []
 
-
-
-
-#remove paypal feature ASAP
-
-
-
-
 # insert numeric labels
-for header in ['Length', 'CommonWords', 'Slashes', 'Paypal', 'DoubleSlash', 'QuestionMark', 'AtSymbol', 'PeriodCount', 'Dash', 'Semicolon', 'WLetter', 'VLetter', 'XLetter', 'ZLetter', 'JLetter', 'QLetter', 'Vowels', 'FirstPartNumbers']:
+for header in ['Length', 'Vocab', 'Slashes', 'PeriodCount', 'Letter', 'Symbol']:
   feature.append(feature_column.numeric_column(header))
 
 feature_layer = tf.keras.layers.DenseFeatures(feature)
@@ -71,4 +63,4 @@ print("Accuracy", accuracy)
 
 model.summary()
 
-model.save(os.path.join(dirname,'../model_1.3/model'))
+#model.save(os.path.join(dirname,'../model_1.4/model'))

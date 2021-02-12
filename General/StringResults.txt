@@ -86,3 +86,8 @@
 ['|']	Minimum: 1	Total Links: 148	Good Samples: 66	Bad Samples: 82	Percent Indication: 44.59
 ['*']	Minimum: 1	Total Links: 106	Good Samples: 74	Bad Samples: 32	Percent Indication: 69.81
 ['.']	Minimum: 1	Total Links: 549215	Good Samples: 392867	Bad Samples: 156348	Percent Indication: 71.53
+['.com', '.net', '.org', '.co', '.uk', '.us', '.gov', '.edu', '.info', '.biz', '.me']	Minimum: 1	Total Links: 487440	Good Samples: 374005	Bad Samples: 113435	Percent Indication: 76.72
+['.com', '.net', '.org', '.co', '.uk', '.us', '.gov', '.edu', '.info', '.biz', '.me']	Minimum: 1	Total Links: 487440	Good Samples: 374005	Bad Samples: 113435	Percent Indication: 76.72
+['.com', '.net', '.org', '.co', '.uk', '.us', '.gov', '.edu', '.info', '.biz', '.me']	Minimum: 1	Total Links: 487440	Good Samples: 374005	Bad Samples: 113435	Percent Indication: 76.72
+['.com', '.net', '.org', '.co', '.uk', '.us', '.gov', '.edu', '.info', '.biz', '.me']	Minimum: 2	Total Links: 390442	Good Samples: 299058	Bad Samples: 91384	Percent Indication: 76.59
+['.com', '.net', '.org', '.co', '.uk', '.us', '.gov', '.edu', '.info', '.biz', '.me']	Minimum: 3	Total Links: 20490	Good Samples: 3550	Bad Samples: 16940	Percent Indication: 17.32
