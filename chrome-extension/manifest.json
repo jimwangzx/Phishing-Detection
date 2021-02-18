@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+
+  "name": "QMIND Phishing Detection",
+  "description": "Find any malicious/phishing links before you click them",
+  "version": "1.0",
+
+  "browser_action": {
+   "default_icon": "icon.png",
+   "default_popup": "popup.html"
+  },
+  "background":{
+    "scripts":["background.js"]
+  },
+  "permissions": [
+   "tabs",
+   "<all_urls>"
+   ]
+}

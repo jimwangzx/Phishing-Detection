@@ -1,3 +1,12 @@
 *.csv
+!phishing_site_urls.csv
+!commonString.csv
 
 .ipynb_checkpoints
+
+.vscode/
+test/
+
+*__pycache__*
+
+*/node_modules/
