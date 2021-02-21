@@ -1,5 +1,5 @@
 var background_script = chrome.extension.getBackgroundPage();
-const SERVER_URL = "http://0.0.0.0";
+const SERVER_URL = "http://3.17.188.42/";
 
 chrome.runtime.onMessage.addListener(async function (request, sender) {
   if (request.action == "scrapeLinks") {
