@@ -1,77 +1,95 @@
 import pandas as pd
 import numpy as np
-import os
+import tldextract
+import re
 
-dirname = os.path.dirname(__file__)
-
-links = pd.read_csv(os.path.join(dirname,"./data/commonString.csv"), engine= 'python') 
+links = pd.read_csv("data/commonString.csv") 
 commonWord = links['String']
 g1 = links['Good']
 t1 = links['Word Count']
 
+def extract(url):
+  extraction_data = {}
+  extraction = tldextract.extract(url)
 
-def VocabCheck(url):
-    # define variables
-    goodWordsFound = 0
-    badWordsFound = 0
+  extraction_data['subdomain'] = extraction.subdomain
+  extraction_data['domain'] = extraction.domain
+  extraction_data['suffix'] = extraction.suffix
+  extraction_data['domain_name'] = extraction.domain + "." + extraction.suffix
+
+  path_regex = re.compile(r'(\w+://){,1}/((/|.)+)')
+  try:
+    path = path_regex.search(url).group(0)
+    extraction_data['path'] = path
+  except AttributeError:
+    extraction_data['path'] = ''
+  return extraction_data
     
-    # Run through the list of common words
-    for i in range (0,len(commonWord),1):
-        if url.find(commonWord[i]) >= 0:
-            # if found state whether word is good or bad
-            if g1[i] > t1[i] - g1[i]:
-                goodWordsFound += 1
-            else:
-                badWordsFound += 1
+def VocabCheck(url, commonWord, g1, t1):
+  # define variables
+  goodWordsFound = 0
+  badWordsFound = 0
+  
+  # Run through the list of common words
+  for i in range (0,len(commonWord),1):
+    if url.find(commonWord[i]) >= 0:
+      # if found state whether word is good or bad
+      if g1[i] > t1[i] - g1[i]:
+        goodWordsFound += 1
+      else:
+        badWordsFound += 1
 
-    #Determine the final result
-    if badWordsFound > 0 and goodWordsFound > 0:
-        return 0
-    elif goodWordsFound > 0:
-        return 1
-    elif badWordsFound > 0:
-        return -1
-    else:
-        return 0
+  #Determine the final result
+  if badWordsFound > 0 and goodWordsFound > 0:
+    return 0
+  elif goodWordsFound > 0:
+    return -1
+  elif badWordsFound > 0:
+    return 1
+  else:
+    return 0
 
+def substring_has_domain(substring):
+  count = substring.count('.com')
+  count += substring.count('.net')
+  count += substring.count('.ca')
+  count += substring.count('.php')
+  count += substring.count('.www')
+  return count
 
-def url_to_datapoint(url):
-    
-    # Feature: Length of string
-        length = len(url)
+def url_to_data(url):
+  global commonWord
+  global t1
+  global g1
+  data = []
+  data.append(url.count('.'))
+  data.append(url.count('/'))
+  data.append(url.count('//'))
+  data.append(url.count('@'))
+  data.append(len(url))
+  data.append(sum(c.isdigit() for c in url))
+  data.append(int(url[0].isdigit()))
 
-        # Feature: Vocabulary addition
-        vocab = VocabCheck(url)
+  data.append(url.count('w'))
+  data.append(url.count('v'))
+  data.append(url.count('x'))
+  data.append(url.count('z'))
+  data.append(url.count('j'))
+  data.append(url.count('q'))
 
-        # Feature: counts '/'
-        slashes = url.count('/')
+  data.append(substring_has_domain(extract(url)['path']))
 
-        # Feature: Double slash
-        doubSlash = url.count('//')
-        
-        # Feature: at symbol
-        atSymbol = url.count('@')
+  data.append(int(re.search('(?:\d{1,3}\.){3}\d{1,3}', url) is not None))
+  data.append(url.count(';'))
 
-        # Feature: Period count
-        periodCount = url.count('.')
+  domains = ['.com', '.net', '.ca', '.html', '.exe', '.xyz', '.php', '.rar']
+  data.append(sum(substring in url for substring in domains))
 
-        # Feature: infrequent Letters
-        wLetter = url.count('w')
-        vLetter = url.count('v')
-        xLetter = url.count('x')
-        zLetter = url.count('z')
-        jLetter = url.count('j')
-        qLetter = url.count('q')
+  vowelLetter = ['a', 'e', 'i', 'o', 'u']
+  data.append(sum(letter in vowelLetter for letter in url))
+  data.append(url.count('.edu') + url.count('.org'))
 
-        # Feature: vowels
-        vowelLetter = ['a', 'e', 'i', 'o', 'u']
-        vowels = 0
-        for z in range(0,5,1):
-            vowels += url.count(vowelLetter[z])
+  data.append(int(re.search('[0-9a-f]{64}|[0-9a-f]{32}', url) is not None))
 
-        # Feature: .edu or .org
-        dotService = url.count('.edu') + url.count('.org')
-
-        final = np.array([length, vocab, slashes, doubSlash, atSymbol, periodCount, wLetter, vLetter, xLetter, zLetter, jLetter, qLetter, vowels, dotService])
-        return final
-
+  data.append(VocabCheck(url, commonWord, g1, t1))
+  return data
