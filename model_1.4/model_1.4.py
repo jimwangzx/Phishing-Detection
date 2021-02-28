@@ -37,7 +37,7 @@ test_ds = df_to_dataset(test, shuffle=True, batch_size=batch_size)
 feature = []
 
 # insert numeric labels
-for header in ['Length', 'Vocab', 'Slashes', 'PeriodCount', 'Letter', 'Symbol']:
+for header in ['Length', 'CommonWords', 'Paypal', 'Slashes', 'DoubleSlash', 'AtSymbol', 'QuestionMark', 'Dash', 'Semicolon', 'PeriodCount', 'WLetter', 'VLetter', 'XLetter', 'ZLetter', 'JLetter', 'QLetter', 'Vowels', 'FirstPartNumbers']:
   feature.append(feature_column.numeric_column(header))
 
 feature_layer = tf.keras.layers.DenseFeatures(feature)
@@ -56,7 +56,7 @@ model = tf.keras.Sequential([
 
 model.compile(loss = tf.losses.MeanSquaredError(), optimizer = tf.optimizers.Adam(), metrics=['accuracy'])
 
-model.fit(train_ds, validation_data=val_ds, epochs=10)
+model.fit(train_ds, validation_data=val_ds, epochs=40)
 
 loss, accuracy = model.evaluate(test_ds)
 print("Accuracy", accuracy)

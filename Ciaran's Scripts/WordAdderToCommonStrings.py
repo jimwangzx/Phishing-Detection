@@ -64,13 +64,14 @@ def appendCommonString(word, total, good, index):
         percentIndication = 100 - percentIndication
 
     #dataPoint = {'String': word, 'Word Count': total, 'Good': good, 'Bad': total-good, 'Percent Indication': percentIndication}
-    dataPoint = [index, word, total, good, total-good, percentIndication]
+    if percentIndication > 80:
+        dataPoint = [index, word, total, good, total-good, percentIndication]
 
-    with open(os.path.join(dirname,"../data/commonString3.csv"), 'a+', newline='') as write_obj:
+        with open(os.path.join(dirname,"../data/commonString3.csv"), 'a+', newline='') as write_obj:
 
-        csv_writer = writer(write_obj)
+            csv_writer = writer(write_obj)
 
-        csv_writer.writerow(dataPoint)
+            csv_writer.writerow(dataPoint)
     #print(dataPoint)
 
     #pd.DataFrame([dataPoint]).to_csv('data/commonString2.csv',)

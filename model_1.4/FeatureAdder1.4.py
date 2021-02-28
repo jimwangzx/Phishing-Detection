@@ -5,13 +5,13 @@ from itertools import permutations
 dirname = os.path.dirname(__file__)
 
 # Read Dataset
-data = pd.read_csv(os.path.join(dirname,"../data/phishing_site_urls.csv")) 
-f1 = data['URL']
-f2 = data['Label']
+data = pd.read_csv(os.path.join(dirname,"../data/ValidationSet.csv")) 
+f1 = data['domain']
+f2 = data['label']
 dataSize = len(f1)
 
 # Read Common Words List
-links = pd.read_csv(os.path.join(dirname,"../data/commonString.csv"), engine= 'python') 
+links = pd.read_csv(os.path.join(dirname,"../data/commonString3.csv"), engine= 'python') 
 commonWord = links['String']
 g1 = links['Good']
 t1 = links['Word Count']
@@ -44,57 +44,103 @@ def VocabCheck(url):
         return avgPeri
 
 def main():
-
     # Define features list
     length = [0]*(dataSize)
     vocab = [0]*(dataSize)
     slashes = [0]*(dataSize)
+    doubSlash = [0]*(dataSize)
+    atSymbol = [0]*(dataSize)
     periodCount = [0]*(dataSize)
-    letter = [0]*(dataSize)
-    symbols = [0]*(dataSize)
-    numbers = [0]*(dataSize)
+    wLetter = [0]*(dataSize)
+    vLetter = [0]*(dataSize)
+    xLetter = [0]*(dataSize)
+    zLetter = [0]*(dataSize)
+    jLetter = [0]*(dataSize)
+    qLetter = [0]*(dataSize)
+    vowels = [0]*(dataSize)
+    paypal = [0]*(dataSize)
+    semicolon = [0]*(dataSize)
+    dash = [0]*(dataSize)
+    qmark = [0]*(dataSize)
+    firstPartNumbers = [0]*(dataSize)
 
     target = [0]*(dataSize)
 
-    # Run loop for all variables
+     # Run loop for all variables
     for i in range(0,dataSize,1):
-        # Print Progress
         if i % int(dataSize/100) == 0:
             print('Loading...', int(i*100/dataSize), '%')
 
         # Feature: Length of string
         if len(f1[i]) < 60:
             length[i] = 0
+        elif len(f1[i]) < 120:
+            length[i] = 1
+        elif len(f1[i]) < 225:
+            length[i] = 2
         else:
-            length[i] = len(f1[i])
-        
-        # Feature: Vocab Check
+            length[i] = 3
+
+        # Feature: Vocabulary addition
         vocab[i] = VocabCheck(f1[i])
 
+        # Feature: Paypal finder
+        paypal[i] = f1[i].count('paypal')
+        
         # Feature: counts '/'
-        slashes[i] = f1[i].count('/') + 2*f1[i].count('//')
+        slashes[i] = f1[i].count('/')
+
+        # Feature: Double slash
+        doubSlash[i] = f1[i].count('//')
+        
+        # Feature: at symbol
+        atSymbol[i] = f1[i].count('@')
 
         # Feature: Period count
         periodCount[i] = f1[i].count('.')
 
-        # Feature: Infrequent Letters
-        letter[i] = f1[i].count('w') + f1[i].count('v') + f1[i].count('x') + f1[i].count('z') + f1[i].count('j') + f1[i].count('q')
+        # Feature: infrequent Letters
+        wLetter[i] = f1[i].count('w')
+        vLetter[i] = f1[i].count('v')
+        xLetter[i] = f1[i].count('x')
+        zLetter[i] = f1[i].count('z')
+        jLetter[i] = f1[i].count('j')
+        qLetter[i] = f1[i].count('q')
 
-        # Feature: symbols
-        symbols[i] = f1[i].count('@') + f1[i].count('?') + f1[i].count('-') + f1[i].count(';')
+        # Feature: vowels
+        for z in range(0,5,1):
+            vowels[i] += f1[i].count(vowelLetter[z])
 
-        # Feature: symbols
-        for digit in numList:
-            numbers[i] += f1[i].count(digit)
+        # Feature: Question Mark
+        qmark[i] = f1[i].count('?')
+
+        # Feature: - and ;
+        dash[i] = f1[i].count('-')
+        semicolon[i] = f1[i].count(';')
+
+        # Feature: Numbers in first section
+        titleURL = f1[i]
+        firstPartNumbersCount = 0
+        if f1[i].count('/') == 0:
+            URLlength = len(f1[i])
+        else:
+            URLlength = f1[i].index('/')
+
+        titleURL = titleURL[0:URLlength]
+
+        for n in range (0,len(numList),1):
+            firstPartNumbersCount += titleURL.count(numList[n])
+
+        firstPartNumbers[i] = firstPartNumbersCount
 
         # Change Label to integer
-        if f2[i] == 'good':
+        if f2[i] == 0:
             target[i] = 1
 
     print('Loading... 100 %')
     # Create final dataframe
 
-    final = {'URL': f1, 'Length': length, 'Vocab': vocab, 'Slashes': slashes, 'PeriodCount': periodCount, 'Letter': letter, 'Symbol': symbols, 'Target': target}
+    final = {'URL': f1, 'Length': length, 'CommonWords': vocab, 'Paypal': paypal, 'Slashes': slashes, 'DoubleSlash': doubSlash, 'AtSymbol': atSymbol, 'QuestionMark': qmark, 'Dash': dash, 'Semicolon': semicolon, 'PeriodCount': periodCount, 'WLetter': wLetter, 'VLetter': vLetter, 'XLetter': xLetter, 'ZLetter': zLetter, 'JLetter': jLetter, 'QLetter': qLetter, 'Vowels': vowels, 'FirstPartNumbers': firstPartNumbers, 'Target': target}
 
     df = pd.DataFrame(final)
 
