@@ -8,7 +8,20 @@ function getLinks(document_root) {
   return aTags
 }
 
-chrome.runtime.sendMessage({
-  action: "scrapeLinks",
-  source: getLinks(document)
-});
+function handleResponse(res) {
+  console.log(res.res)
+}
+
+function handleError(err) {
+  console.error(err)
+}
+
+(function(){
+  console.log("here")
+  let message = chrome.runtime.sendMessage({
+    action: "scrapeLinks",
+    source: getLinks(document)
+  })
+  console.log(message)
+  //message.then(handleResponse, handleError);
+})()

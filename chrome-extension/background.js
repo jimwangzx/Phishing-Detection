@@ -4,11 +4,12 @@ function log(message) {
 const SERVER_URL = "http://3.139.57.29/";
 
 
-var RUN = localStorage.getItem("autoRun");
+var RUN = localStorage.getItem("autoRun") == 'true';
 
-chrome.runtime.onMessage.addListener(async function (request, sender) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action == "scrapeLinks") {
     let urls = request.source;
+    console.log(urls)
     let response;
     try {
       fetch(SERVER_URL + "/multi-predict", {
@@ -20,14 +21,9 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
       }).then(response => {
         return response.json();
       }).then(data => {
-        console.log(data)
-        localStorage.setItem("results", data)
-
-        chrome.tabs.executeScript(null, {
-          file: "injectWarnings.js",
-        });
-      })
-      
+        // localStorage.setItem("results", data)
+        sendResponse({res: data})
+      }); 
     } catch (error) {
       log(error);
     }
@@ -35,7 +31,7 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if (changeInfo.status == 'complete' && tab.active && RUN){
+  if ((changeInfo.status == 'complete') && tab.active && RUN){
     if (tab.url.startsWith("http")){
       chrome.tabs.executeScript(null, {
         file: "getPagesSource.js",
