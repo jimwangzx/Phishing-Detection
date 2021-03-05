@@ -1,32 +1,25 @@
 var background_script = chrome.extension.getBackgroundPage();
-const SERVER_URL = "http://0.0.0.0";
-
-chrome.runtime.onMessage.addListener(async function (request, sender) {
-  if (request.action == "scrapeLinks") {
-    background_script.log(request.source);
-    let urls = request.source;
-    background_script.log("updated");
-    let response;
-    try {
-      response = await fetch(SERVER_URL + "/multi-predict", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(urls),
-      });
-
-      background_script.log(response);
-    } catch (error) {
-      background_script.log(error);
-    }
-  }
-});
 
 function onWindowLoad() {
-  chrome.tabs.executeScript(null, {
-    file: "getPagesSource.js",
-  });
+  const checkbox = document.querySelector('#autoCheck')
+  const checkbutton = document.querySelector('#checkButton')
+  let checked
+  try{
+    checked = localStorage.getItem("autoRun")
+    checkbox.checked = checked == 'true'
+    background_script.RUN = checkbox.checked
+  } catch (error){
+    //Don't care if it fails, means it should be false anyway
+  }
+  checkbox.addEventListener("click", () =>{
+    localStorage.setItem('autoRun',checkbox.checked)
+    background_script.RUN = checkbox.checked
+  })
+  checkbutton.addEventListener("click", () =>{
+    chrome.tabs.executeScript(null, {
+      file: "getPagesSource.js",
+    });
+  })
 }
 
 window.onload = onWindowLoad;

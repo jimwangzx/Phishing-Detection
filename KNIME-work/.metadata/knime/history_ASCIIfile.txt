@@ -1,2 +1,0 @@
-file:D:/QMIND-phishing/Pishing-Detection/data/data_feature_no_URL.csv
-knime://knime.workflow/data.all

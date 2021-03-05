@@ -11,4 +11,4 @@ function getLinks(document_root) {
 chrome.runtime.sendMessage({
   action: "scrapeLinks",
   source: getLinks(document)
-});
+})
