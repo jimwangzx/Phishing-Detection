@@ -1,0 +1,1 @@
+['pp']	Minimum: 1	Total Links: 18401	Good Samples: 7654	Bad Samples: 10747	Percent Indication: 41.59

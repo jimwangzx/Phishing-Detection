@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 {
     "MinSupport-124": {
@@ -5,4 +6,13 @@
         "type": "number",
         "default": 2.5
     }
+=======
+
+{
+    "MinSupport-124": {
+        "label": "Minimum Support",
+        "type": "number",
+        "default": 2.5
+    }
+>>>>>>> ciaran-branch
 }

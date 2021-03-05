@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>My_First_Workflow</name>
@@ -10,3 +11,17 @@
 		<nature>org.knime.workbench.ui.KNIMEProjectNature</nature>
 	</natures>
 </projectDescription>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>My_First_Workflow</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>org.knime.workbench.ui.KNIMEProjectNature</nature>
+	</natures>
+</projectDescription>
+>>>>>>> ciaran-branch
