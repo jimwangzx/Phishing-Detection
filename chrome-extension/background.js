@@ -1,6 +1,3 @@
-function log(message) {
-  console.log(message);
-}
 const SERVER_URL = "http://3.139.57.29/";
 
 
@@ -9,7 +6,6 @@ var RUN = localStorage.getItem("autoRun") == 'true';
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action == "scrapeLinks") {
     let urls = request.source;
-    console.log(urls)
     let response;
     try {
       fetch(SERVER_URL + "/multi-predict", {
@@ -21,11 +17,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       }).then(response => {
         return response.json();
       }).then(data => {
-        // localStorage.setItem("results", data)
-        sendResponse({res: data})
+        chrome.storage.local.set({"data":data})
+        chrome.tabs.executeScript(null, {
+          file: "injectWarnings.js",
+        });
       }); 
     } catch (error) {
-      log(error);
+      console.error(error);
     }
   }
 });
